@@ -1,0 +1,3 @@
+{% autoescape off %} Hi {{ user.username }}, {{ follower.username }} just
+followed you on SocialHub! Visit your profile: {{ site_url }}{% url
+'accounts:profile' user.username %} Thanks, SocialHub Team {% endautoescape %}

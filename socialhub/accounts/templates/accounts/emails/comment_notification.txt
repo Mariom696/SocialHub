@@ -1,0 +1,7 @@
+Hello {{ user.username }},
+
+{{ commenter.username }} commented on your post.
+View post: http://localhost:8000/posts/{{ post.id }}/
+
+Thanks,
+The SocialHub Team

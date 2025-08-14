@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <body style="font-family: Arial, sans-serif">
+    <h2>Activate your SocialHub account</h2>
+    <p>Hi {{ user.username }},</p>
+    <p>Click the button below to activate your account:</p>
+    <p>
+      <a
+        href="{{ protocol }}://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}"
+        style="
+          display: inline-block;
+          padding: 10px 15px;
+          background: #28a745;
+          color: white;
+          text-decoration: none;
+          border-radius: 4px;
+        "
+        >Activate account</a
+      >
+    </p>
+    <p>If you didn't register, ignore this email.</p>
+  </body>
+</html>

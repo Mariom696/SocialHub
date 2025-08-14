@@ -1,0 +1,7 @@
+Hi {{ user.username }},
+
+Please activate your SocialHub account by clicking the link below:
+
+{{ protocol }}://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
+
+If you didn't register, ignore this message.

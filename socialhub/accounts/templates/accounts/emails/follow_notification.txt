@@ -1,0 +1,5 @@
+Hi {{ user.username }},
+
+{{ follower.username }} just followed you on SocialHub!
+
+Visit your profile here: {{ site_url }}{% url 'accounts:profile' user.username %}

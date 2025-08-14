@@ -1,0 +1,122 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container py-4">
+  <!-- Profile Header -->
+  <div class="d-flex align-items-center mb-4">
+    {% if profile_user.profile.avatar %}
+    <img
+      src="{{ profile_user.profile.avatar.url }}"
+      alt="Avatar"
+      class="rounded-circle me-3"
+      width="80"
+      height="80"
+    />
+    {% else %}
+    <img
+      src="{% static 'img/default-avatar.png' %}"
+      alt="Avatar"
+      class="rounded-circle me-3"
+      width="80"
+      height="80"
+    />
+    {% endif %}
+    <div>
+      <h3 class="mb-0">{{ profile_user.username }}</h3>
+      {% if can_view_profile_details and profile_user.profile.bio %}
+      <p class="mb-1 text-muted">{{ profile_user.profile.bio }}</p>
+      {% elif not can_view_profile_details %}
+      <p class="mb-1 text-muted">This profile is private</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Profile Actions -->
+  {% if user.is_authenticated %} {% if not is_own_profile %}
+  <!-- Other user's profile - ALWAYS show follow button -->
+  <div class="mb-3">
+    {% if is_following %}
+    <a
+      href="{% url 'accounts:unfollow' profile_user.id %}"
+      class="btn btn-outline-danger btn-sm"
+      >Unfollow</a
+    >
+    {% else %}
+    <a
+      href="{% url 'accounts:follow' profile_user.id %}"
+      class="btn btn-primary btn-sm"
+      >Follow</a
+    >
+    {% endif %}
+
+    <!-- Additional action buttons -->
+    <a
+      href="{% url 'accounts:report' profile_user.id %}"
+      class="btn btn-outline-warning btn-sm ms-2"
+      >Report</a
+    >
+    <!-- <a
+      href="{% url 'accounts:block' profile_user.id %}"
+      class="btn btn-outline-dark btn-sm ms-2"
+      >Block</a
+    > -->
+  </div>
+
+  <!-- Privacy message if can't view posts -->
+  {% if not can_view_posts %}
+  <div class="alert alert-info">
+    <i class="bi bi-lock"></i>
+    This account is private. Follow to see their posts.
+  </div>
+  {% endif %} {% else %}
+  <!-- Own profile -->
+  <div class="mb-3">
+    <a
+      href="{% url 'accounts:profile_edit' %}"
+      class="btn btn-outline-secondary btn-sm me-2"
+      >Edit Profile</a
+    >
+    <a
+      href="{% url 'accounts:settings' %}"
+      class="btn btn-outline-secondary btn-sm"
+      >Settings</a
+    >
+  </div>
+  {% endif %} {% endif %}
+
+  <hr />
+
+  <!-- User Posts -->
+  {% if can_view_posts %}
+  <h4>{{ profile_user.username }}'s Posts</h4>
+  {% if posts %}
+  <div class="row g-3 mt-3">
+    {% for post in posts %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card">
+        {% if post.image %}
+        <img
+          src="{{ post.image.url }}"
+          class="card-img-top"
+          alt="Post Image"
+          style="height: 500px"
+        />
+        {% endif %}
+        <div class="card-body">
+          <p class="card-text">{{ post.text }}</p>
+          <p class="text-muted small mb-1">
+            Privacy: {{ post.get_privacy_display }}
+          </p>
+          <a
+            href="{% url 'post_detail' post.pk %}"
+            class="btn btn-sm btn-primary"
+            >View</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-muted mt-3">No posts yet.</p>
+  {% endif %} {% endif %}
+</div>
+{% endblock %}

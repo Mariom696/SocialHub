@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <body style="font-family: Arial, sans-serif">
+    <h2>Welcome to SocialHub, {{ user.username }} 🎉</h2>
+    <p>
+      Thanks for joining.
+      <a
+        href="{{ protocol }}://{{ domain }}{% url 'accounts:profile' user.username %}"
+        >View your profile</a
+      >.
+    </p>
+    <p>— SocialHub Team</p>
+  </body>
+</html>

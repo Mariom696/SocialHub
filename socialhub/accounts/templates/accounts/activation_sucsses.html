@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block content %}
+<h3>Account activated</h3>
+<p>
+  Your account is active and you are now logged in.
+  <a href="{% url 'accounts:profile' user.username %}">Go to profile</a>.
+</p>
+{% endblock %}

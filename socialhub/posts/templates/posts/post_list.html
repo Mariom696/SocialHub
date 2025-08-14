@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Home Feed</h1>
+    <a href="{% url 'post_create' %}" class="btn btn-primary btn-sm">
+      <i class="bi bi-plus-circle"></i> Create New Post
+    </a>
+  </div>
+  <hr />
+
+  {% if posts %} {% for post in posts %}
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <div class="d-flex align-items-center mb-2">
+        <img
+          src="{{ post.author.profile.avatar.url|default:'/static/images/default-avatar.png' }}"
+          class="rounded-circle me-2"
+          alt="{{ post.author.username }}"
+          width="40"
+          height="40"
+        />
+        <div>
+          <a
+            href="{% url 'accounts:profile' post.author.username %}"
+            class="fw-bold text-decoration-none"
+          >
+            {{ post.author.username }}
+          </a>
+          <div class="text-muted small">
+            {{ post.created_at|date:"M d, Y H:i" }}
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-2">{{ post.text }}</p>
+
+      {% if post.image %}
+      <div class="d-flex flex-row justify-content-center">
+        <img
+          src="{{ post.image.url }}"
+          class="img-fluid rounded mb-2"
+          style="width: 400px"
+          alt="Post image"
+        />
+      </div>
+
+      {% endif %}
+
+      <p class="small text-muted mb-2">
+        Privacy: {{ post.get_privacy_display }}
+      </p>
+
+      <a
+        href="{% url 'post_detail' post.pk %}"
+        class="btn btn-outline-primary btn-sm"
+      >
+        View Details
+      </a>
+    </div>
+  </div>
+  {% endfor %} {% else %}
+  <div class="alert alert-info">
+    No posts yet. Be the first to share something!
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

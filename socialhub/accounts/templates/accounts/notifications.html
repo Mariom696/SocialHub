@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container py-4">
+  <h2>Notifications</h2>
+  {% if notifications %}
+  <ul class="list-group mt-3">
+    {% for notif in notifications %}
+    <li
+      class="list-group-item d-flex justify-content-between {% if not notif.is_read %}fw-bold{% endif %}"
+    >
+      {{ notif.message }}
+      <small class="text-muted">{{ notif.created_at|date:"M d, Y H:i" }}</small>
+      {% if not notif.is_read %}
+      <a
+        href="{% url 'accounts:mark_notification_read' notif.id %}"
+        class="btn btn-sm btn-outline-primary"
+        >Mark as Read</a
+      >
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="text-muted mt-3">No notifications yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

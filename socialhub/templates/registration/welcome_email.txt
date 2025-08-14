@@ -1,0 +1,5 @@
+Hi {{ user.username }},
+
+Welcome to SocialHub! We're happy to have you.
+
+Visit your profile: {{ protocol }}://{{ domain }}{% url 'accounts:profile' user.username %}
